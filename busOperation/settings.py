@@ -129,7 +129,7 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
-# ### デプロイ時のみ使用 ###
+# ### デプロイ時のみ使用 ### 変更1203
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_build')
 
 # Default primary key field type
