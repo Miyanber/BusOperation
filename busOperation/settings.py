@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,10 +54,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'busOperation.urls'
 
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,7 +80,12 @@ WSGI_APPLICATION = 'busOperation.wsgi.app'
 # Note: Django modules for using databases are not support in serverless
 # environments like Vercel. You can use a database over HTTP, hosted elsewhere.
 
-DATABASES = {}
+DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+}
 
 
 # Password validation
@@ -101,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'ja-jp'
+LANGUAGE_CODE = 'ja'
 
 TIME_ZONE = 'Asia/Tokyo'
 
@@ -109,13 +118,18 @@ USE_I18N = True
 
 USE_TZ = True
 
-import os
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_URL = '/static/'
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+# アプリケーションフォルダ内の静的ファイルのディレクトリ
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+
+# ### デプロイ時のみ使用 ###
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 # Default primary key field type
