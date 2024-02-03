@@ -16,30 +16,31 @@
     </header>
 
     <section class="busstops">
-        {% if busstop_dicts %}
-        {% for busstop_dict in busstop_dicts %}
+        {% if busstops %}
+        {% for busstop in busstops %}
         <div class="busstop">
-            <h2 class="{{ busstop_dict.busstop.bus_company }}">
-                {% comment %} {% with "./img/"|add:busstop_dict.busstop.bus_company|add:"_logo.jpg" as logo_link %}
+            <h2 class="{{ busstop.bus_company }}">
+                {% comment %} {% with "./img/"|add:busstop.bus_company|add:"_logo.jpg" as logo_link %}
                 <img src="{% static logo_link %}">
                 {% endwith %} {% endcomment %}
-                {{ busstop_dict.busstop.busstop_name }}
+                {{ busstop.busstop_name }}
                 <div class="triangle {% if forloop.counter == 1 %}triangle--transform{% endif %}"></div>
             </h2>
             <div class="{% if forloop.counter != 1 %}hidden{% endif %}">
-                <table class="{{ busstop_dict.busstop.bus_company }}">
-                    {% for destination in busstop_dict.destinations %}
-                    <tr onclick="moveToURL('{{ destination.approach_url }}')">
-                        <th>{{ forloop.counter }}</th>
-                        <td>{{ destination.destination_name }}</td>
-                        {% if busstop_dict.busstop.bus_company == Company.KYOTO_CITY %}
-                        <td class="systemNumber">A,31,201,C,3,17</td>
-                        {% endif %}
-                    </tr>
+                <table class="{{ busstop.bus_company }}">
+                    {% for destination in busstop.destinations %}
+                        <tr onclick="moveToURL('{{ destination.approach_url }}')">
+                            <th>{{ forloop.counter }}</th>
+                            {{ destination.setProperName }}
+                            <td>{{ destination.destination_name }}</td>
+                            {% if busstop.bus_company == Company.KYOTO_CITY %}
+                                <td class="systemNumber">{{ destination.systems }}</td>
+                            {% endif %}
+                        </tr>
                     {% endfor %}
                 </table>
-                {% if busstop_dict.busstop.map_link %}
-                <img src="{% static busstop_dict.busstop.map_link %}" class="map">
+                {% if busstop.map_link %}
+                    <img src="{% static busstop.map_link %}" class="map">
                 {% endif %}
             </div>
         </div>
