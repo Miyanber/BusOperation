@@ -21,15 +21,15 @@
 		}
 	],
 	"routes": [
-		{
-			"source": "/static/(.*)",
-			"destination": "/static/$1"
-		},
-		{
-			"source": "/(.*)",
-			"destination": "busOperation/wsgi.py"
-		}
-	],
+        {
+            "src": "/static/(.*)",
+            "dest": "/staticfiles/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "busOperation/wsgi.py"
+        }
+    ],
 	"headers": [
 		{
 			"source": "/static/(.*)",
