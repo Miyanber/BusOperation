@@ -23,7 +23,7 @@
 	"rewrites": [
 		{
 			"source": "/static/(.*)",
-			"destination": "/staticfiles/$1"
+			"destination": "/static/$1"
 		},
 		{
 			"source": "/(.*)",
