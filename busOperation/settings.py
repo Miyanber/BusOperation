@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 # overrideをTrueにしないとシステム環境変数が優先される？
 load_dotenv('.env', override=True)
-load_dotenv('.env.development', override=True)
+load_dotenv('.env.development.local', override=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'approach'
+    'approach',
 ]
 
 MIDDLEWARE = [
