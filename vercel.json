@@ -1,32 +1,52 @@
 {
-    "regions": [
+	"version": 2,
+	"regions": [
         "hnd1"
     ],
-    "builds": [
-        {
-            "src": "busOperation/wsgi.py",
-            "use": "@vercel/python",
-            "config": {
-                "maxLambdaSize": "15mb",
-                "runtime": "python3.11"
-            }
-        },
-        {
-            "src": "build_files.sh",
-            "use": "@vercel/static-build",
-            "config": {
-              "distDir": "static_build"
-            }
-        }
-    ],
-    "routes": [
-        {
-            "src": "/static/(.*)",
-            "dest": "/static/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "busOperation/wsgi.py"
-        }
-    ]
+	"builds": [
+		{
+			"src": "busOperation/wsgi.py",
+			"use": "@vercel/python",
+			"config": {
+				"maxLambdaSize": "15mb",
+				"runtime": "python3.11"
+			}
+		},
+		{
+			"src": "build_files.sh",
+			"use": "@vercel/static-build",
+			"config": {
+				"distDir": "static"
+			}
+		}
+	],
+	"rewrites": [
+		{
+			"source": "/static/(.*)",
+			"destination": "/static/$1"
+		},
+		{
+			"source": "/(.*)",
+			"destination": "busOperation/wsgi.py"
+		}
+	],
+	"headers": [
+		{
+			"source": "/static/(.*)",
+			"headers": [
+				{
+					"key": "Vercel-CDN-Cache-Control",
+					"value": "max-age=0, s-maxage=86400"
+				},
+				{
+					"key": "CDN-Cache-Control",
+					"value": "max-age=0, s-maxage=86400"
+				},
+				{
+					"key": "Cache-Control",
+					"value": "max-age=0, s-maxage=86400"
+				}
+			]
+		}
+	]
 }

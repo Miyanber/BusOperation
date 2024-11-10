@@ -153,3 +153,5 @@ cython_debug/
 .vercel
 .env.development.local
 memo.md
+
+static/
