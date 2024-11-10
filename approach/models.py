@@ -36,7 +36,6 @@ class Destination(models.Model):
         self.systems = self.getSystemsByName()
         if self.systems:
             self.destination_name = self.destination_name.replace(f"({self.systems})", "")
-            print(self.destination_name)
         return ""
     
     def getSystemsByName(self):
