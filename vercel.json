@@ -20,16 +20,16 @@
 			}
 		}
 	],
-	"routes": [
-        {
-            "src": "/static/(.*)",
-            "dest": "/staticfiles/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "busOperation/wsgi.py"
-        }
-    ],
+	"rewrites": [
+		{
+			"source": "/static/(.*)",
+			"destination": "/staticfiles/$1"
+		},
+		{
+			"source": "/(.*)",
+			"destination": "busOperation/wsgi.py"
+		}
+	],
 	"headers": [
 		{
 			"source": "/static/(.*)",
