@@ -154,4 +154,4 @@ cython_debug/
 .env.development.local
 memo.md
 
-static/
+staticfiles/
