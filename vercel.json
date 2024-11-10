@@ -16,14 +16,14 @@
 			"src": "build_files.sh",
 			"use": "@vercel/static-build",
 			"config": {
-				"distDir": "staticfiles"
+				"distDir": "static"
 			}
 		}
 	],
 	"rewrites": [
 		{
 			"source": "/static/(.*)",
-			"destination": "/staticfiles/$1"
+			"destination": "/static/$1"
 		},
 		{
 			"source": "/(.*)",
