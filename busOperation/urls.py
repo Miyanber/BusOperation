@@ -24,5 +24,4 @@ urlpatterns = [
     path('', include("approach.urls")),
 ]
 
-if settings.DEBUG == True:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
