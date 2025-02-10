@@ -4,5 +4,5 @@ from . import views
 
 app_name = "approach"
 urlpatterns = [
-    path('', views.index, name="index")
+    path('', views.BusstopListView.as_view(), name="index")
 ]

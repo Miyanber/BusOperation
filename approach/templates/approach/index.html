@@ -28,7 +28,7 @@
             </h2>
             <div class="{% if forloop.counter != 1 %}hidden{% endif %}">
                 <table class="{{ busstop.bus_company }}">
-                    {% for destination in busstop.destinations %}
+                    {% for destination in busstop.destinations.all %}
                         <tr onclick="moveToURL('{{ destination.approach_url }}')">
                             <th>{{ forloop.counter }}</th>
                             {{ destination.setProperName }}

@@ -90,6 +90,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASES = {
+    # SQLite
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',

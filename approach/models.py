@@ -24,7 +24,7 @@ class Busstop(models.Model):
 
 
 class Destination(models.Model):
-    busstop = models.ForeignKey(Busstop, on_delete=models.CASCADE)  # どのバス停に対する行先か
+    busstop = models.ForeignKey(Busstop, related_name="destinations", on_delete=models.CASCADE)  # どのバス停に対する行先か
     destination_name = models.CharField(blank=True, max_length=64)  # 行先の名称
     approach_url = models.URLField(blank=True, max_length=1000)
     order = models.PositiveSmallIntegerField(default=1)
