@@ -1,7 +1,16 @@
 from django.db import models
 import re
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
+class CustomUser(AbstractUser):
+    groups = None
+    user_permissions = None
+    
+    def __str__(self):
+        return f"{self.pk}.{self.get_username()}"
+
+
 class Busstop(models.Model):
     class Company(models.TextChoices):
         HANSHIN = "hanshin"
