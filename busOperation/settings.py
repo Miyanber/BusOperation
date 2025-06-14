@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 # overrideをTrueにしないとシステム環境変数が優先される？
 load_dotenv('.env', override=True)
-load_dotenv('.env.development.local', override=True)
+# load_dotenv('.env.development', override=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -101,7 +101,11 @@ DATABASES = {
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'HOST': os.environ.get('POSTGRES_HOST'),
-    },
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
 }
 
 
@@ -156,3 +160,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'approach.CustomUser'
+
+LOGIN_REDIRECT_URL = 'approach:index'
+LOGIN_URL = 'approach:login'
+LOGOUT_REDIRECT_URL = 'approach:index'

@@ -1,0 +1,17 @@
+{% extends "approach/base.html" %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.errors }}
+    <div>
+        <label for="username">ユーザー名:</label>
+        {{ form.username }}
+    </div>
+    <div>
+        <label for="password">パスワード:</label>
+        {{ form.password }}
+    </div>
+    <button type="submit">ログイン</button>
+</form>
+{% endblock content %}

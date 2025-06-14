@@ -1,120 +1,108 @@
+{% extends "approach/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="jp">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>バス接近情報</title>
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}" sizes="180x180">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <script src="{% static 'js/script.js' %}" defer></script>
-</head>
-<body>
-    <header>
-        <h1>バス接近情報</h1>
-    </header>
 
-    <section class="busstops">
-        {% if busstops %}
-        {% for busstop in busstops %}
-        <div class="busstop">
-            <h2 class="{{ busstop.bus_company }}">
-                {% comment %} {% with "./img/"|add:busstop.bus_company|add:"_logo.jpg" as logo_link %}
-                <img src="{% static logo_link %}">
-                {% endwith %} {% endcomment %}
-                {{ busstop.busstop_name }}
-                <div class="triangle {% if forloop.counter == 1 %}triangle--transform{% endif %}"></div>
-            </h2>
-            <div class="{% if forloop.counter != 1 %}hidden{% endif %}">
-                <table class="{{ busstop.bus_company }}">
-                    {% for destination in busstop.destinations.all %}
-                        <tr onclick="moveToURL('{{ destination.approach_url }}')">
-                            <th>{{ forloop.counter }}</th>
-                            {{ destination.setProperName }}
-                            <td>{{ destination.destination_name }}</td>
-                            {% if busstop.bus_company == Company.KYOTO_CITY %}
-                                <td class="systemNumber">{{ destination.systems }}</td>
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
-                </table>
-                {% if busstop.map_link %}
-                    <img src="{% static busstop.map_link %}" class="map">
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
-        {% else %}
-            <p>No approach is available.</p>
-        {% endif %}
-        <div class="busstop">
-            <h2 class="hanshin">
-                阪神バス<div class="triangle"></div>
-            </h2>
-            <div class="hidden">
-                <table class="hanshin else">
-                    <tr>
-                        <th>武庫之荘1丁目</th>
-                        <td onclick="moveToURLById(36)">(40,41,45,48,48-2)JR立花方面</td>
-                    </tr>
-                    <tr>
-                        <th>武庫之荘3丁目</th>
-                        <td onclick="moveToURLById(37)">(46)JR立花方面</td>
-                    </tr>
-                    <tr>
-                        <th>武庫之荘4丁目</th>
-                        <td onclick="moveToURLById(38)">阪急武庫之荘(40,41,41-2,45)方面</td>
-                    </tr>
-                    <tr>
-                        <th>北図書館</th>
-                        <td onclick="moveToURLById(44)">【北行】(43,43-2,55)</td>
-                    </tr>
-                    <tr>
-                        <th>長洲本通</th>
-                        <td onclick="moveToURLById(39)">【北行】(48),その他</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="2">スポーツセンター</th>
-                        <td onclick="moveToURLById(31)">阪急園田(22),阪急武庫之荘(48)方面</td>
-                    </tr>
-                    <tr>
-                        <td onclick="moveToURLById(32)">阪神尼崎(22),JR尼崎(48)方面</td>
-                    </tr>
-                    <tr>
-                        <th>南武庫之荘7丁目</th>
-                        <td onclick="moveToURLById(33)">宝塚方面</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="2">水堂</th>
-                        <td onclick="moveToURLById(42)">宝塚方面</td>
-                    <tr>
-                        <td onclick="moveToURLById(43)">尼崎,杭瀬,甲子園方面</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="2">阪神尼崎駅北</th>
-                        <td onclick="moveToURLById(34)">宝塚,芦屋,甲子園方面</td>
-                    </tr>
-                    <tr>
-                        <td onclick="moveToURLById(35)">杭瀬方面</td>
-                    </tr>
-                    <tr>
-                        <th>阪神尼崎(南)</th>
-                        <td onclick="moveToURLById(45)">宝塚,西宮方面</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="2">尼崎西消防署前</th>
-                        <td onclick="moveToURLById(40)">武庫営業所(47),宝塚方面</td>
-                    </tr>
-                    <tr>
-                        <td onclick="moveToURLById(41)">武庫川(47),尼崎,杭瀬,甲子園方面</td>
-                    </tr>
-                    <!--<tr><th></th><td onclick="moveToURLById()"></td></tr>-->
-                </table>
-            </div>
-        </div>
-    </section>
+{% block head %}
+<script src="{% static 'js/script.js' %}" defer></script>
+{% endblock head %}
 
-    <footer>&copy;2023 Miyanber</footer>
-</body>
-</html>
+{% block content %}
+<section class="busstops">
+    {% if busstops %}
+    {% for busstop in busstops %}
+    <div class="busstop">
+        <h2 class="{{ busstop.bus_company }}">
+            {% comment %} {% with "./img/"|add:busstop.bus_company|add:"_logo.jpg" as logo_link %}
+            <img src="{% static logo_link %}">
+            {% endwith %} {% endcomment %}
+            {{ busstop.busstop_name }}
+            <div class="triangle {% if forloop.counter == 1 %}triangle--transform{% endif %}"></div>
+        </h2>
+        <div class="{% if forloop.counter != 1 %}hidden{% endif %}">
+            <table class="{{ busstop.bus_company }}">
+                {% for destination in busstop.destinations.all %}
+                    <tr onclick="moveToURL('{{ destination.approach_url }}')">
+                        <th>{{ forloop.counter }}</th>
+                        {{ destination.setProperName }}
+                        <td>{{ destination.destination_name }}</td>
+                        {% if busstop.bus_company == Company.KYOTO_CITY %}
+                            <td class="systemNumber">{{ destination.systems }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+            {% if busstop.map_link %}
+                <img src="{% static busstop.map_link %}" class="map">
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+        <p>No approach is available.</p>
+    {% endif %}
+    <div class="busstop">
+        <h2 class="hanshin">
+            阪神バス<div class="triangle"></div>
+        </h2>
+        <div class="hidden">
+            <table class="hanshin else">
+                <tr>
+                    <th>武庫之荘1丁目</th>
+                    <td onclick="moveToURLById(36)">(40,41,45,48,48-2)JR立花方面</td>
+                </tr>
+                <tr>
+                    <th>武庫之荘3丁目</th>
+                    <td onclick="moveToURLById(37)">(46)JR立花方面</td>
+                </tr>
+                <tr>
+                    <th>武庫之荘4丁目</th>
+                    <td onclick="moveToURLById(38)">阪急武庫之荘(40,41,41-2,45)方面</td>
+                </tr>
+                <tr>
+                    <th>北図書館</th>
+                    <td onclick="moveToURLById(44)">【北行】(43,43-2,55)</td>
+                </tr>
+                <tr>
+                    <th>長洲本通</th>
+                    <td onclick="moveToURLById(39)">【北行】(48),その他</td>
+                </tr>
+                <tr>
+                    <th rowspan="2">スポーツセンター</th>
+                    <td onclick="moveToURLById(31)">阪急園田(22),阪急武庫之荘(48)方面</td>
+                </tr>
+                <tr>
+                    <td onclick="moveToURLById(32)">阪神尼崎(22),JR尼崎(48)方面</td>
+                </tr>
+                <tr>
+                    <th>南武庫之荘7丁目</th>
+                    <td onclick="moveToURLById(33)">宝塚方面</td>
+                </tr>
+                <tr>
+                    <th rowspan="2">水堂</th>
+                    <td onclick="moveToURLById(42)">宝塚方面</td>
+                <tr>
+                    <td onclick="moveToURLById(43)">尼崎,杭瀬,甲子園方面</td>
+                </tr>
+                <tr>
+                    <th rowspan="2">阪神尼崎駅北</th>
+                    <td onclick="moveToURLById(34)">宝塚,芦屋,甲子園方面</td>
+                </tr>
+                <tr>
+                    <td onclick="moveToURLById(35)">杭瀬方面</td>
+                </tr>
+                <tr>
+                    <th>阪神尼崎(南)</th>
+                    <td onclick="moveToURLById(45)">宝塚,西宮方面</td>
+                </tr>
+                <tr>
+                    <th rowspan="2">尼崎西消防署前</th>
+                    <td onclick="moveToURLById(40)">武庫営業所(47),宝塚方面</td>
+                </tr>
+                <tr>
+                    <td onclick="moveToURLById(41)">武庫川(47),尼崎,杭瀬,甲子園方面</td>
+                </tr>
+                <!--<tr><th></th><td onclick="moveToURLById()"></td></tr>-->
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock content %}

@@ -4,9 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class CustomUser(AbstractUser):
-    groups = None
-    user_permissions = None
-    
+
     def __str__(self):
         return f"{self.pk}.{self.get_username()}"
 
