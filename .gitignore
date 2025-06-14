@@ -151,7 +151,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .vercel
-.env.development.local
+.env.development
 memo.md
 
 staticfiles/
